@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script src="./lib/jquery.min.js"></script>
+<script>
+    /*
+     * jQuery.Deferred()
+     创建一个新的Deferred对象的构造函数，可以带一个可选的函数参数，它会在构造完成后被调用。
+
+     jQuery.when()
+     通过该方式来执行基于一个或多个表示异步任务的对象上的回调函数
+
+     jQuery.ajax()	执行异步Ajax请求，返回实现了promise接口的jqXHR对象
+     deferred.then( doneFilter [, failFilter ] [, progressFilter ] )
+     当Deferred（延迟）对象解决，拒绝或仍在进行中时，调用添加处理程序。
+
+     deferred.done()	当延迟成功时调用一个函数或者数组函数.
+     deferred.fail()	当延迟失败时调用一个函数或者数组函数.。
+     deferred.always()	当Deferred(延迟)对象解决或拒绝时，调用添加处理程序。
+     deferred.resolve(ARG1，ARG2，…)	调用Deferred对象注册的‘done’回调函数并传递参数
+     deferred.resolveWith(context，args)	调用Deferred对象注册的‘done’回调函数并传递参数和设置回调上下文
+     deferred.isResolved	确定一个Deferred对象是否已经解决。
+     deferred.reject(arg1，arg2，…)	调用Deferred对象注册的‘fail’回调函数并传递参数
+     deferred.rejectWith(context，args)	调用Deferred对象注册的‘fail’回调函数并传递参数和设置回调上下文
+     deferred.promise()	返回promise对象，这是一个伪造的deferred对象：它基于deferred并且不能改变状态所以可以被安全的传递*/
+
+
+
+    /*var eq1 = $.ajax('../data/data1.json');
+    var eq2 = eq1.then(function (data) {
+        console.log(data);
+
+        return $.ajax({
+            url: '../data/data2.json',
+            data: {param:data.code},
+            type: 'post'
+        })
+    });
+    var eq3 = eq2.then(function (data) {
+        console.log(data);
+
+        return $.ajax('../data/data3.json')
+    });
+    var res = eq3.done(function (data) {
+        console.log(data)
+    });
+    console.log(res);
+*/
+
+
+    var req = $.when($.ajax('./data/data1.json'),$.ajax('./data/data2.json'),$.ajax('./data/data3.json'))
+    req.done(function(a,b,c){
+        //a,b,c代表三个请求的返回值（数组-包含三个数组项）
+        //索引0为获取的数据，索引1为请求状态是否成功，索引2为返回对象-方法集
+        console.log(a);
+        console.log(a[0][0])
+        console.log(b);
+        console.log(b[0].text[0].name)
+        console.log(c);
+        console.log(c[0][0][0])
+    })
+</script>
+</body>
+</html>
